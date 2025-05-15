@@ -47,21 +47,6 @@ class ThreadDao(BaseDao):
         results = query_result.scalars().all()
         return [ThreadSchema.model_validate(result) for result in results]
 
-    async def get_threads_by_alternate_id(self, alternate_id: int, product: str):
-        query = select(Thread).where(and_(Thread.alternate_id == alternate_id,
-                                          Thread.product == product))
-        result = await self._execute_query(query)
-        results = result.scalars().all()
-        return [ThreadSchema.model_validate(result) for result in results]
-
-    async def get_thread_messages_by_alternate_id(self, alternate_id: int, product: str, user_id: int):
-        query = select(ThreadMessage, Thread).join(ThreadMessage).where(and_(Thread.alternate_id == alternate_id,
-                                                                             Thread.product == product)).order_by(
-            ThreadMessage.id)
-        result = await self._execute_query(query)
-        messages = result.scalars().all()
-        return [ThreadMessageSchema.model_validate(message) for message in messages]
-
     async def soft_delete_thread_by_uuid(self, thread_uuid):
         query = (update(Thread).where(Thread.uuid == thread_uuid,
                                       Thread.is_deleted==False).

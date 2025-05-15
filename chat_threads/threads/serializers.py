@@ -11,7 +11,6 @@ class CreateThreadRequest(BaseModel):
     requested_by: Optional[str]
     user_id: Optional[int] = None
     meta: Optional[dict]
-    alternate_id: Optional[int] = None
     org_id: Optional[str] = None
 
 
@@ -35,7 +34,6 @@ class ThreadSchema(BaseModel):
     product: str
     user_email: str
     user_id: Optional[int] = None
-    alternate_id: Optional[str]
     created_at: datetime
     updated_at: datetime
     last_message_id: Optional[int] = None

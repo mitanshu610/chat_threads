@@ -27,7 +27,6 @@ class ThreadService:
             "uuid": uuid.uuid4(),
             "user_email": create_thread_request.requested_by,
             "user_id": create_thread_request.user_id or None,
-            "alternate_id": create_thread_request.alternate_id,
             "product": create_thread_request.product,
             "meta": create_thread_request.meta or {},
             "org_id": create_thread_request.org_id or None
@@ -41,7 +40,6 @@ class ThreadService:
                 title=create_message_request.content[:23] + '...',
                 product=create_message_request.product,
                 meta={},
-                alternate_id=None,
                 user_id=None,
                 org_id=org_id
             ))
@@ -60,9 +58,6 @@ class ThreadService:
 
     async def list_threads_by_email(self, user_email: str, product: str):
         return await self.thread_dao.get_threads_by_user_email(user_email=user_email, product=product)
-
-    async def list_threads_by_alternate_id(self, alternate_id: int, product: str):
-        return await self.thread_dao.get_threads_by_alternate_id(alternate_id=alternate_id, product=product)
 
     async def update_thread_message(self, thread_id: uuid.UUID, update_message_request: CreateMessageRequest):
         thread_message = await self.thread_message_dao.get_thread_messages_by_id(thread_id)

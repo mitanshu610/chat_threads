@@ -17,7 +17,6 @@ class Thread(Base, TimestampMixin):
     user_id = Column(Integer, nullable=True)
     user_email = Column(String)
     is_deleted = Column(Boolean, default=False)
-    alternate_id = Column(Integer)
     product = Column(SQLAEnum(FynixProducts), nullable=False)
     meta = Column(JSON, default={})
     last_message_id = Column(Integer, nullable=True)
